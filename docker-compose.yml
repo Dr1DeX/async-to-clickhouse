@@ -2,14 +2,14 @@ version: '3'
 services:
   clickhouse-server:
     image: yandex/clickhouse-server:latest
-    user: '101:101'
-    container_name: clickhouse-server
+    hostname: test-db
     ports:
       - '8123:8123'
       - '9000:9000'
       - '9009:9009'
     volumes:
       - clickhouse-data:/var/lib/clickhouse
-      - ./clickhouse-config:/etc/clickhouse-server
+      - ./clickhouse-config:/etc/clickhouse-server/config.d/config.xml
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 volumes:
   clickhouse-data:
