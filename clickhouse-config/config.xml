@@ -1,42 +1,44 @@
 <?xml version="1.0"?>
 <clickhouse>
-    <!-- Путь, где Clickhouse будет хранить данные -->
-
-    <path>/var/lib/clickhouse</path>
+    <!-- Путь, где ClickHouse будет хранить данные -->
+    <path>/var/lib/clickhouse/</path>
     <metadata_path>/var/lib/clickhouse/metadata/</metadata_path>
+    <user_files_path>/var/lib/clickhouse/user_files/</user_files_path>
+    <format_schema_path>/var/lib/clickhouse/format_schemas/</format_schema_path>
+    <tmp_path>/var/lib/clickhouse/tmp/</tmp_path>
 
-    <!-- Настройки логирования-->
+    <!-- Настройки логирования -->
     <logger>
-        <level>trace</level> <!-- уровни логов(trace, debug, info, warning, error) -->
-        <log>/var/log/clickhouse-server/clickhouse-server.log</log> <!-- путь к лог файлам -->
+        <level>trace</level> <!-- Уровни логов: trace, debug, info, warning, error -->
+        <log>/var/log/clickhouse-server/clickhouse-server.log</log> <!-- Путь к лог-файлам -->
         <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
-        <size>1000M</size> <!-- максимальный размер ротации -->
-        <count>10</count> <!-- количество лог-файлов для ротации -->
+        <size>1000M</size> <!-- Максимальный размер лог-файлов -->
+        <count>10</count> <!-- Количество лог-файлов для ротации -->
     </logger>
 
-    <!-- настройки сети -->
-    <http_port>8123</http_port> <!-- порт для HTTP интерфейса -->
-    <tcp_port>9000</tcp_port> <!-- порт для TCP интерфейса -->
-    <interserver_http_port>9009</interserver_http_port> <!-- порт для внутреннего взаимодействия -->
+    <!-- Настройки сети -->
+    <http_port>8123</http_port> <!-- Порт для HTTP интерфейса -->
+    <tcp_port>9000</tcp_port> <!-- Порт для TCP интерфейса -->
+    <interserver_http_port>9009</interserver_http_port> <!-- Порт для внутреннего взаимодействия -->
 
-    <!-- настройки безопасности -->
-    <listen_host>::</listen_host> <!-- Слушает все интерфейсы -->
-    <max_connections>1024</max_connections> <!-- макс-е кол-во подключений -->
-    <max_cache_size>5368709120</max_cache_size> <!-- хранилище кэшированных запросов -->
+    <!-- Настройки безопасности -->
+    <listen_host>::</listen_host> <!-- Слушать все интерфейсы -->
+    <max_connections>1024</max_connections> <!-- Максимальное количество подключений -->
+    <mark_cache_size>5368709120</mark_cache_size> <!-- Хранилище кэшированных данных для запросов -->
 
-    <!-- настройки пользователей и прав -->
+    <!-- Настройки пользователей и прав -->
     <users>
-        <default>
-            <password></password>
+        <user>
+            <password>password</password>
             <networks>
-                <ip>::</ip> <!-- разрешить доступ с любых IP-адресов -->
+                <ip>::/0</ip> <!-- Разрешить доступ с любых IP-адресов -->
             </networks>
             <profile>default</profile>
             <quota>default</quota>
-        </default>
+        </user>
     </users>
 
-    <!-- настройки профилей ресурсов -->
+    <!-- Настройки профилей ресурсов -->
     <profiles>
         <default>
             <max_memory_usage>10000000000</max_memory_usage>
@@ -44,15 +46,15 @@
         </default>
     </profiles>
 
-    <!-- настройки квот для управления кол-ом запросов и ограничениями по времени -->
-    <quatas>
+    <!-- Настройки квот -->
+    <quotas>
         <default>
             <intervals>
                 <interval>
-                    <duration>3600</duration>
-                    <queries>1000</queries>
+                    <duration>3600</duration> <!-- Время интервала в секундах (1 час) -->
+                    <queries>1000</queries> <!-- Максимальное количество запросов в интервале -->
                 </interval>
             </intervals>
         </default>
-    </quatas>
+    </quotas>
 </clickhouse>
