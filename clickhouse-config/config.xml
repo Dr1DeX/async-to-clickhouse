@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<clickhouse>
+    <!-- Путь, где Clickhouse будет хранить данные -->
+
+    <path>/var/lib/clickhouse</path>
+    <metadata_path>/var/lib/clickhouse/metadata/</metadata_path>
+
+    <!-- Настройки логирования-->
+    <logger>
+        <level>trace</level> <!-- уровни логов(trace, debug, info, warning, error) -->
+        <log>/var/log/clickhouse-server/clickhouse-server.log</log> <!-- путь к лог файлам -->
+        <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
+        <size>1000M</size> <!-- максимальный размер ротации -->
+        <count>10</count> <!-- количество лог-файлов для ротации -->
+    </logger>
+
+    <!-- настройки сети -->
+    <http_port>8123</http_port> <!-- порт для HTTP интерфейса -->
+    <tcp_port>9000</tcp_port> <!-- порт для TCP интерфейса -->
+    <interserver_http_port>9009</interserver_http_port> <!-- порт для внутреннего взаимодействия -->
+
+    <!-- настройки безопасности -->
+    <listen_host>::</listen_host> <!-- Слушает все интерфейсы -->
+    <max_connections>1024</max_connections> <!-- макс-е кол-во подключений -->
+    <max_cache_size>5368709120</max_cache_size> <!-- хранилище кэшированных запросов -->
+
+    <!-- настройки пользователей и прав -->
+    <users>
+        <default>
+            <password></password>
+            <networks>
+                <ip>::</ip> <!-- разрешить доступ с любых IP-адресов -->
+            </networks>
+            <profile>default</profile>
+            <quota>default</quota>
+        </default>
+    </users>
+
+    <!-- настройки профилей ресурсов -->
+    <profiles>
+        <default>
+            <max_memory_usage>10000000000</max_memory_usage>
+            <use_uncompressed_cache>1</use_uncompressed_cache>
+        </default>
+    </profiles>
+
+    <!-- настройки квот для управления кол-ом запросов и ограничениями по времени -->
+    <quatas>
+        <default>
+            <intervals>
+                <interval>
+                    <duration>3600</duration>
+                    <queries>1000</queries>
+                </interval>
+            </intervals>
+        </default>
+    </quatas>
+</clickhouse>
