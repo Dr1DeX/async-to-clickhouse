@@ -1,21 +1,17 @@
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
+from asynch import connect
+from asynch.connection import Connection
 
 from app.settings import Settings
 
 settings = Settings()
 
-engine = create_async_engine(
-    url=settings.db_url
-)
 
-AsyncSessionFactory = async_sessionmaker(
-    engine,
-    autocommit=False,
-    expire_on_commit=False,
-    class_=AsyncSession
-)
-
-
-async def get_db_session() -> AsyncSession:
-    async with AsyncSessionFactory() as session:
-        yield session
+async def get_db_connection() -> Connection:
+    conn = await connect(
+        host=settings.DB_HOST,
+        port=settings.DB_PORT,
+        database=settings.DB_NAME,
+        user=settings.DB_USER,
+        password=settings.DB_PASSWORD
+    )
+    return conn
