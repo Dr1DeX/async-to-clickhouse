@@ -28,15 +28,26 @@
 
     <!-- Настройки пользователей и прав -->
     <users>
-        <user>
-            <password>password</password>
-            <networks>
-                <ip>::/0</ip> <!-- Разрешить доступ с любых IP-адресов -->
-            </networks>
-            <profile>default</profile>
-            <quota>default</quota>
-        </user>
-    </users>
+    <default>
+        <password></password> <!-- Убедись, что пароль пустой для superuser -->
+        <profile>default</profile>
+        <quota>default</quota>
+        <networks>
+            <ip>::/0</ip>
+        </networks>
+        <grants>
+            <grant>CREATE USER</grant>
+        </grants>
+    </default>
+    <user name="user">
+        <password>password</password>
+        <profile>default</profile>
+        <quota>default</quota>
+        <networks>
+            <ip>::/0</ip>
+        </networks>
+    </user>
+</users>
 
     <!-- Настройки профилей ресурсов -->
     <profiles>

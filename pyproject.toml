@@ -15,6 +15,8 @@ pydantic = "^2.8.2"
 pydantic-settings = "^2.4.0"
 uvicorn = "^0.30.5"
 sqlalchemy = "^2.0.32"
+clickhouse-connect = "^0.7.18"
+pandas = "^2.2.2"
 
 
 [build-system]
